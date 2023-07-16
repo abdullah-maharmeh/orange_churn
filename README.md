@@ -1,4 +1,5 @@
-### orange_churn prediction 
+
+## orange_churn prediction 
 
 ### Software that we are using 
 
@@ -11,5 +12,6 @@
 Create a new enviroment 
 '''
 conda create -p venv python==3.7 -y
+
 '''
 

@@ -1,3 +1,141 @@
-<h1>
-Hello World
-</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        } 
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .prediction {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .satisfied-animation {
+            animation: satisfied 2s ease-in-out;
+        }
+        .walk-away-animation {
+            animation: walk-away 2s ease-in-out;
+        }
+        @keyframes satisfied {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes walk-away {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var predictionText = "{{ prediction_text }}";
+            if (predictionText) {
+                animateResult(predictionText);
+            }
+        });
+
+        function animateResult(prediction) {
+            var predictionTextElement = document.getElementById("predictionText");
+            if (prediction === "The customer will stay") {
+                predictionTextElement.classList.add("satisfied-animation");
+                predictionTextElement.innerHTML = "The customer will stay";
+            } else if (prediction === "The customer will leave the company") {
+                predictionTextElement.classList.add("walk-away-animation");
+                predictionTextElement.innerHTML = "The customer will leave the company";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Churn Prediction</h1>
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <label for="customer_months">Customer with Orange Months:</label>
+            <input type="text" id="customer_months" name="customer_months" placeholder="Enter number of months">
+        </div>
+        <div class="form-group">
+            <label for="commitment_duration">Commitment Duration:</label>
+            <input type="text" id="commitment_duration" name="commitment_duration" placeholder="Enter commitment duration">
+        </div>
+        <div class="form-group">
+            <label for="commitment_fg">Commitment Flag:</label>
+            <input type="text" id="commitment_fg" name="commitment_fg" placeholder="Enter 0 or 1">
+        </div>
+        <div class="form-group">
+            <label for="migration_flag">Migration Flag:</label>
+            <input type="text" id="migration_flag" name="migration_flag" placeholder="Enter 0 or 1">
+        </div>
+        <div class="form-group">
+            <label for="disconnection_min">Disconnection Total Minimum per Day:</label>
+            <input type="text" id="disconnection_min" name="disconnection_min" placeholder="Enter total minutes">
+        </div>
+        
+        <div class="form-group">
+            <label for="state">State:</label>
+            <select id="state" name="state">
+                <option value="West Amman">West Amman</option>
+                <option value="East Amman">East Amman</option>
+                <option value="Irbid">Irbid</option>
+                <option value="Balqa">Balqa</option>
+                <option value="Zarqa">Zarqa</option>
+                <option value="Madaba">Madaba</option>
+                <option value="Jarash">Jarash</option>
+                <option value="Aqaba">Aqaba</option>
+                <option value="Karak">Karak</option>
+                <option value="Ma'an">Ma'an</option>
+                <option value="Mafraq">Mafraq</option>
+            </select>
+        </div>
+        <input type="submit" value="Predict" onclick="animateResult('stay');">
+    </form>
+    <div id="predictionText" class="prediction"></div>
+    
+</body>
+</html>
